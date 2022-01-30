@@ -2,6 +2,7 @@ services:
   dev:
     image: "swiftlang/swift:nightly-focal"
     volumes:
-      - /Users/code/labs/swift:/code
-    environment:
-      - USER=supreeth
+      - /Users/supreethavadhani/mocker-app:/code
+    ports:
+      - "3000:3000"
+    command: bash -c "apt-get -y update && apt-get -y install nodejs && node /code/index.js"

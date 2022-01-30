@@ -2,7 +2,13 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/data/2.5/weather', (req, res) => {
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+app.get('/v1/weather', (req, res) => {
   res.send({
     "coord": {
         "lon": -123.262,
@@ -48,6 +54,22 @@ app.get('/data/2.5/weather', (req, res) => {
     "cod": 200
 })
 })
+
+app.get('/v1/hello', (req, res) => {
+    res.send({ "Greetings":"Hello world"})
+  })
+
+  app.post('/v1/auth', (req, res) => {
+    let username = req.body.username
+    let password = req.body.password
+    if(!username || !password){
+        res.status(400);
+        res.send({"response":"Password or username empty"})
+    }
+    else{
+        res.send({"token":"feUMAexzKk3KfYfbaOn5nlzD9IAa4Ortw9iWeLWl"})
+      }
+    })
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
