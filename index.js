@@ -3,6 +3,7 @@ const moment = require('moment')
 const app = express()
 const port = 3000
 var bodyParser = require('body-parser')
+var expriryTime;
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -21,6 +22,11 @@ app.get('/v1/weather', (req, res) => {
     res.status(401)
     res.send({
       "response": "Unauthorized"
+    })
+  } else if (!moment().isAfter(expriryTime)) {
+    res.status(401)
+    res.send({
+      "response": "stale token"
     })
   } else {
     res.send({
@@ -80,6 +86,11 @@ app.get('/v1/hello', (req, res) => {
     res.send({
       "response": "Unauthorized"
     })
+  } else if (!moment().isAfter(expriryTime)) {
+    res.status(401)
+    res.send({
+      "response": "stale token"
+    })
   } else {
     res.send({
       "Greetings": "Hello world"
@@ -96,9 +107,11 @@ app.post('/v1/auth', (req, res) => {
       "response": "Password or username empty"
     })
   } else {
+    expriryTime = moment().add(30, 'm').toDate()
+    res.status(200)
     res.send({
       "access-token": token,
-      "expires": moment().add(30, 'm').toDate()
+      "expires": expriryTime
     })
   }
 })
@@ -111,6 +124,6 @@ function getToken(req) {
   var header = req.headers['authorization']
   if (header) {
     let token = header.split(' ')[1]
-    return(token)
+    return (token)
   }
 }
