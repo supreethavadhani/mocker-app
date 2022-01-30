@@ -1,8 +1,10 @@
 const express = require('express')
+const moment= require('moment') 
 const app = express()
 const port = 3000
-
 var bodyParser = require('body-parser')
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -67,7 +69,10 @@ app.get('/v1/hello', (req, res) => {
         res.send({"response":"Password or username empty"})
     }
     else{
-        res.send({"token":"feUMAexzKk3KfYfbaOn5nlzD9IAa4Ortw9iWeLWl"})
+        res.send({
+          "access-token": token,
+          "expires": moment().add(30, 'm').toDate()
+        })
       }
     })
 
