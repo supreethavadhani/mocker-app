@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 app.get('/v1/weather', (req, res) => {
+  console.log("Calling weather")
   let reqToken = getToken(req);
   if (!reqToken) {
     res.status(400)
@@ -23,7 +24,7 @@ app.get('/v1/weather', (req, res) => {
     res.send({
       "response": "Unauthorized"
     })
-  } else if (!moment().isAfter(expriryTime)) {
+  } else if (moment().isAfter(expriryTime)) {
     res.status(401)
     res.send({
       "response": "stale token"
@@ -75,6 +76,7 @@ app.get('/v1/weather', (req, res) => {
 })
 
 app.get('/v1/hello', (req, res) => {
+  console.log("Calling hello")  
   let reqToken = getToken(req);
   if (!reqToken) {
     res.status(400)
@@ -86,31 +88,33 @@ app.get('/v1/hello', (req, res) => {
     res.send({
       "response": "Unauthorized"
     })
-  } else if (!moment().isAfter(expriryTime)) {
+  } else if (moment().isAfter(expriryTime)) {
     res.status(401)
     res.send({
-      "response": "stale token"
+      "response": "Stale token"
     })
   } else {
     res.send({
-      "Greetings": "Hello world"
+      "response": "Hello world"
     })
   }
 })
 
 app.post('/v1/auth', (req, res) => {
+  console.log("Calling auth")  
   let username = req.body.username
   let password = req.body.password
   if (!username || !password) {
     res.status(400);
     res.send({
-      "response": "Password or username empty"
+      "access_token": " ",
+      "expires": " "
     })
   } else {
-    expriryTime = moment().add(30, 'm').toDate()
+    expriryTime = moment().add(30, 'minutes');
     res.status(200)
     res.send({
-      "access-token": token,
+      "access_token": token,
       "expires": expriryTime
     })
   }
