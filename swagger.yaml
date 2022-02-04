@@ -1,3 +1,4 @@
+# weather serive swagger doc with 3 endpoint
 swagger: "2.0"
 info:
   description: "CS561 Assignment 4"
