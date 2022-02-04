@@ -8,7 +8,7 @@ console.log('Node. js Express server is running on port 3000... ')
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    const allowedOrigins = ['https://editor.swagger.io', 'https://hoppscotch.io','ec2-34-207-116-86.compute-1.amazonaws.com'];
+    const allowedOrigins = ['https://editor.swagger.io', 'https://hoppscotch.io','http://ec2-34-207-116-86.compute-1.amazonaws.com:3000'];
     const origin = req.headers.origin;
     
     if (allowedOrigins.includes(origin)) {
@@ -16,7 +16,7 @@ app.use(function (req, res, next) {
     }
     
     // Request methods you wish to allow eg: GET, POST, OPTIONS, PUT, PATCH, DELETE
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST,OPTIONS,PUT,PATCH,DELETE');
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'Authorization','X-Requested-With,content-type');
