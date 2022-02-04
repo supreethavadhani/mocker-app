@@ -9,22 +9,30 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "ec2-34-207-116-86.compute-1.amazonaws.com:3000"
+host: "localhost:3000"
 basePath: "/v1"
 tags:
 - name: "Weather Service"
-  description: "Everything about Corvallis's Weather"
+  description: "Everything about Corvallis's Weather. Before using the try it out feature, click on authorize and enter the following text - Bearer <token >"
 - name: "Greetings"
   description: "Hello World!"
 - name: "Authentication"
   description: "User authentication"
 schemes:
 - "http"
+securityDefinitions:
+  Bearer:
+    description: ENTER  "Bearer token" AS INPUT 
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /weather:
     get:
       tags:
       - "Weather Service"
+      security:
+        - Bearer: []
       summary: "Get Corvallis's weather details"
       operationId: "getWeatherData"
       produces:
@@ -56,6 +64,8 @@ paths:
     get:
       tags:
       - "hello world"
+      security:
+      - Bearer: []
       summary: "Get greetings"
       operationId: "getGreetings"
       produces:
