@@ -8,7 +8,7 @@ console.log('Node. js Express server is running on port 3000... ')
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    const allowedOrigins = ['https://editor.swagger.io', 'https://hoppscotch.io'];
+    const allowedOrigins = ['https://editor.swagger.io', 'https://hoppscotch.io','ec2-34-207-116-86.compute-1.amazonaws.com'];
     const origin = req.headers.origin;
     
     if (allowedOrigins.includes(origin)) {
