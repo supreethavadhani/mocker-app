@@ -9,7 +9,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost:3000"
+host: "http://ec2-34-207-116-86.compute-1.amazonaws.com:3000"
 basePath: "/v1"
 tags:
 - name: "Weather Service"
